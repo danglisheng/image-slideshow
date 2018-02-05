@@ -8,11 +8,16 @@
     *{
       box-sizing: border-box;
     }
+    header {
+      margin-top:30px;
+      text-align: center;
+    }
     .slideshow {
       width: 90%;
       max-width:1000px;
       margin:0 auto;
-      border:solid 1px black;
+      border:dotted 1px black;
+      padding:10px;
       position: relative;
     }
     .prev,
@@ -23,19 +28,22 @@
       width:8%;
       height:100%;
       line-height: 100%;
-      border:solid 1px red;
+      border:solid 1px #96ff00;
       text-align: center;
       font-size: 1rem;
       padding:0.1em;
       border-radius:5px;
+      box-shadow:0px 4px rgba(150, 255, 0, 0.5);
       cursor:pointer;
       user-select: none;
       margin:1%;
+      position:relative;
+      transition:all 0.2s ease;
     }
     @media only screen and (min-width:25em) {
       .prev,
       .next {
-        font-size:2rem;
+        font-size:1.5rem;
         padding:.2em;
       }
     }
@@ -46,12 +54,24 @@
         padding:.2em;
       }
     }
+    .prev:hover,
+    .next:hover {
+      background-color:#ff8800;
+      border-color:#ff8800;
+      color:#96ff00;
+      box-shadow:0 4px rgba(255,136,0,0.5);
+    }
+    .prev:active,
+    .next:active {
+      top:4px;
+      box-shadow:none;
+    }
     figure.img-wrapper {
       vertical-align: middle;
       display:inline-block;
       margin:0 auto;
       width:80%;
-      border:solid 1px black;
+      
     }
     figure.img-wrapper>img {
       max-width:100%;
@@ -62,12 +82,51 @@
   </style> 
 </head>
 <body>
+  <header>
+    <h1>响应式图片幻灯片</h1>
+  </header>
   <div class="slideshow">
 
   <span class="prev">&lt;</span><figure class="img-wrapper">
-    <img src="images/mailbox.jpg" alt="">
+    <img src="images/bud.jpg" alt="bud image">
   </figure><span class="next">&gt;</span>
   </div>
   <!-- /end .slideshow -->
+  <script>
+    var prev,next,image,imgs,imgIndex=0;
+    window.onload=init;
+    function init(){
+      prev=document.querySelector(".prev");
+      next=document.querySelector(".next");
+      image=document.querySelector(".slideshow img");
+      imgs=['./images/bud.jpg',
+            './images/cat.jpg',
+            './images/city.jpg',
+            './images/mailbox.jpg',
+            './images/road.jpg'];
+      prev.addEventListener("click",gotoPrev);
+      next.addEventListener("click",gotoNext);
+
+    }
+    function gotoPrev(e){
+      if(imgIndex==0) {
+        imgIndex=imgs.length-1;
+      }
+      else {
+        imgIndex--;
+      }
+      image.setAttribute("src",imgs[imgIndex]);
+    }
+    function gotoNext(e) {
+      if(imgIndex==imgs.length-1) {
+        imgIndex=0;
+      }
+      else {
+        imgIndex++;
+      }
+      image.setAttribute("src",imgs[imgIndex]);
+    }
+
+  </script>
 </body>
 </html>
